@@ -257,7 +257,7 @@ resource null_resource create_instances {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/wait-for-crds.sh && kubectl apply -n ${self.triggers.namespace} -f ${self.triggers.dir}"
+    command = "${path.module}/scripts/wait-for-crds.sh && oc apply -n ${self.triggers.namespace} -f ${self.triggers.dir}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
