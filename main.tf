@@ -230,7 +230,7 @@ resource null_resource create_subscription {
 
   provisioner "local-exec" {
     when = destroy
-    command = "kubectl delete -n ${self.triggers.namespace} -f ${self.triggers.file}"
+    command = "kubectl delete -f ${self.triggers.file}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
