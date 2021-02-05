@@ -221,7 +221,7 @@ resource null_resource create_subscription {
   }
 
   provisioner "local-exec" {
-    command = "kubectl apply -f ${self.triggers.file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator && ${path.module}/scripts/wait-for-crds.sh"
+    command = "kubectl apply -f ${self.triggers.file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
@@ -248,7 +248,7 @@ resource local_file instance_yaml {
 }
 
 resource null_resource create_instances {
-  depends_on = [local_file.instance_yaml]
+  depends_on = [local_file.instance_yaml, null_resource.create_subscription]
 
   triggers = {
     KUBECONFIG = var.cluster_config_file
@@ -257,7 +257,7 @@ resource null_resource create_instances {
   }
 
   provisioner "local-exec" {
-    command = "kubectl apply -n ${self.triggers.namespace} -f ${self.triggers.dir}"
+    command = "${path.module}/scripts/wait-for-crds.sh && kubectl apply -n ${self.triggers.namespace} -f ${self.triggers.dir}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
