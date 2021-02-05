@@ -221,7 +221,7 @@ resource null_resource create_subscription {
   }
 
   provisioner "local-exec" {
-    command = "kubectl apply -n ${self.triggers.namespace} -f ${self.triggers.file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator"
+    command = "kubectl apply -f ${self.triggers.file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
