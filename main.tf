@@ -189,7 +189,7 @@ resource null_resource default_storage_class {
   depends_on = [null_resource.create_dirs]
 
   provisioner "local-exec" {
-    command = "${path.module}/get-default-storage-class.sh ${local.storage_class_file}"
+    command = "${path.module}/scripts/get-default-storage-class.sh ${local.storage_class_file}"
 
     environment = {
       KUBECONFIG = var.cluster_config_file
