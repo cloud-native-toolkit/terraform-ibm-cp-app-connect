@@ -8,6 +8,8 @@ locals {
   storage_class     = var.storage_class != "" ? var.storage_class : local.default_storage_class
 
   subscription_file = "${local.gitops_dir}/subscription.yaml"
+  subscription_name = "ibm-appconnect"
+  subscription_namespace = "openshift-operators"
 
   integration-server_file = "${local.instance_dir}/integration-server.yaml"
   switch-server_file = "${local.instance_dir}/switch-server.yaml"
@@ -18,8 +20,8 @@ locals {
     apiVersion = "operators.coreos.com/v1alpha1"
     kind = "Subscription"
     metadata = {
-      name = "ibm-appconnect"
-      namespace = "openshift-operators"
+      name = local.subscription_name
+      namespace = local.subscription_namespace
     }
     spec = {
       channel = "v1.2"
@@ -210,12 +212,12 @@ resource null_resource create_subscription {
 
   triggers = {
     KUBECONFIG = var.cluster_config_file
-    namespace = var.namespace
-    file = local.subscription_file
+    namespace = local.subscription_namespace
+    name = local.subscription_name
   }
 
   provisioner "local-exec" {
-    command = "kubectl apply -f ${self.triggers.file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator"
+    command = "kubectl apply -f ${local.subscription_file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
@@ -224,7 +226,7 @@ resource null_resource create_subscription {
 
   provisioner "local-exec" {
     when = destroy
-    command = "kubectl delete -f ${self.triggers.file}"
+    command = "kubectl delete -n ${self.triggers.namespace} subscription ${self.triggers.name}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
