@@ -92,7 +92,6 @@ locals {
     kind = "DesignerAuthoring"
     metadata = {
       name = "des-01-quickstart"
-      namespace = "app-connect"
     }
     spec = {
       couchdb = {
@@ -119,7 +118,6 @@ locals {
     kind = "Dashboard"
     metadata = {
       name = "db-01-quickstart"
-      namespace = "app-connect"
     }
     spec = {
       license = {
