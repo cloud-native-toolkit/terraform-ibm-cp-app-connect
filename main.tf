@@ -158,14 +158,12 @@ locals {
   instance_files = [
     local.integration-server_file,
     local.switch-server_file,
-    local.designer_file,
-    local.dashboard_file
+    local.designer_file
   ]
   instances      = [
     local.integration-server_instance,
     local.switch-server_instance,
-    local.designer_instance,
-    local.dashboard_instance
+    local.designer_instance
   ]
 }
 
