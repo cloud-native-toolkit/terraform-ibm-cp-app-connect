@@ -157,13 +157,34 @@ locals {
     }
   }
 
+  instance_config = [
+    {
+      file = local.integration-server_file
+      instance = local.integration-server_instance
+    },
+    {
+      file = local.switch-server_file
+      instance = local.switch-server_instance
+    },
+    {
+      file = local.designer_file
+      instance = local.designer_instance
+    },
+    {
+      file = local.dashboard_file
+      instance = local.dashboard_instance
+    }
+  ]
+
   instance_files = [
     local.integration-server_file,
-    local.switch-server_file
+    local.switch-server_file,
+    local.designer_file
   ]
   instances      = [
     local.integration-server_instance,
-    local.switch-server_instance
+    local.switch-server_instance,
+    local.designer_instance
   ]
 }
 
@@ -236,11 +257,11 @@ resource null_resource create_subscription {
 
 resource local_file instance_yaml {
   depends_on = [null_resource.create_dirs]
-  count = length(local.instance_files)
+  count = length(local.instance_config.*.file)
 
-  filename = local.instance_files[count.index]
+  filename = local.instance_config[count.index].file
 
-  content = yamlencode(local.instances[count.index])
+  content = yamlencode(local.instance_config[count.index].instance)
 }
 
 resource null_resource create_instances {
