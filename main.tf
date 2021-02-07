@@ -11,6 +11,12 @@ locals {
   subscription_name = "ibm-appconnect"
   subscription_namespace = "openshift-operators"
 
+  license = {
+    accept = true
+    license = "L-APEH-BSVCHU"
+    use = "CloudPakForIntegrationProduction"
+  }
+
   subscription = {
     file     = "${local.gitops_dir}/subscription.yaml"
     instance = {
@@ -39,11 +45,7 @@ locals {
         name = "is-01-toolkit"
       }
       spec = {
-        license = {
-          accept = true
-          license = "L-APEH-BSVCHU"
-          use = "CloudPakForIntegrationProduction"
-        }
+        license = local.license
         pod = {
           containers = {
             runtime = {
@@ -83,11 +85,7 @@ locals {
         name = "ss-01-quickstart"
       }
       spec = {
-        license = {
-          accept = true
-          license = "L-APEH-BSVCHU"
-          use = "CloudPakForIntegrationProduction"
-        }
+        license = local.license
       }
       useCommonServices = true
       version = "11.0.0"
@@ -111,11 +109,7 @@ locals {
           }
         }
         designerFlowsOperationMode = "local"
-        license = {
-          accept = true
-          license = "L-APEH-BSVCHU"
-          use = "CloudPakForIntegrationNonProduction"
-        }
+        license = local.license
         replicas = 1
         useCommonServices = true
         version = "11.0.0"
@@ -131,11 +125,7 @@ locals {
         name = "db-01-quickstart"
       }
       spec = {
-        license = {
-          accept = true
-          license = "L-APEH-BSVCHU"
-          use = "CloudPakForIntegrationNonProduction"
-        }
+        license = local.license
         pod = {
           containers = {
             content-server = {
