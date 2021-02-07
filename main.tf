@@ -212,10 +212,20 @@ resource null_resource create_subscription {
     KUBECONFIG = var.cluster_config_file
     namespace = local.subscription_namespace
     name = local.subscription_name
+    file = local_file.subscription_yaml.filename
   }
 
   provisioner "local-exec" {
-    command = "kubectl apply -f ${local.subscription.file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator"
+    command = "kubectl apply -f ${self.triggers.file} && ${path.module}/scripts/wait-for-csv.sh ${self.triggers.namespace} ibm-integration-platform-navigator"
+
+    environment = {
+      KUBECONFIG = self.triggers.KUBECONFIG
+    }
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "kubectl delete -f ${self.triggers.file}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
