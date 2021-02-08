@@ -250,6 +250,7 @@ resource null_resource create_instances {
     KUBECONFIG = var.cluster_config_file
     namespace = var.namespace
     dir = local.instance_dir
+    files = join(",", local_file.instance_yaml.*.filename)
   }
 
   provisioner "local-exec" {
@@ -262,7 +263,7 @@ resource null_resource create_instances {
 
   provisioner "local-exec" {
     when = destroy
-    command = "kubectl delete -n ${self.triggers.namespace} -f ${local_file.instance_yaml[count.index].filename}"
+    command = "kubectl delete -n ${self.triggers.namespace} -f ${split("," self.triggers.files)[count.index]}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
