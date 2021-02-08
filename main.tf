@@ -14,7 +14,7 @@ locals {
   license = {
     accept = true
     license = "L-APEH-BSVCHU"
-    use = "CloudPakForIntegrationProduction"
+    use = "CloudPakForIntegrationNonProduction"
   }
 
   subscription = {
