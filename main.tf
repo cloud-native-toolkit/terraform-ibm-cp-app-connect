@@ -249,11 +249,11 @@ resource null_resource create_instances {
   triggers = {
     KUBECONFIG = var.cluster_config_file
     namespace = var.namespace
-    files = local_file.instance_yaml.*.filename
+    dir = local.instance_dir
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/wait-for-crds.sh && oc apply -n ${self.triggers.namespace} -f ${self.triggers.files[count.index]}"
+    command = "${path.module}/scripts/wait-for-crds.sh && oc apply -n ${self.triggers.namespace} -f ${local_file.instance_yaml.*.filename}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
@@ -262,7 +262,7 @@ resource null_resource create_instances {
 
   provisioner "local-exec" {
     when = destroy
-    command = "kubectl delete -n ${self.triggers.namespace} -f ${self.triggers.files[count.index]}"
+    command = "kubectl delete -n ${self.triggers.namespace} -f ${self.triggers.dir}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
