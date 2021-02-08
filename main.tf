@@ -160,8 +160,7 @@ locals {
   instance_config = [
     local.integration-server,
     local.switch-server,
-    local.designer,
-    local.dashboard
+    local.designer
   ]
 }
 
