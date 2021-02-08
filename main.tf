@@ -157,11 +157,12 @@ locals {
     }
   }
 
-  instance_config = [
+  base_instances = [
     local.integration-server,
     local.switch-server,
     local.designer
   ]
+  instance_config = concat(local.base_instances, var.dashboard ? [local.dashboard] : [])
 }
 
 resource null_resource create_dirs {

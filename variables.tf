@@ -38,3 +38,9 @@ variable "gitops_dir" {
   description = "The directory where the gitops configuration should be stored"
   default     = ""
 }
+
+variable "dashboard" {
+  type        = bool
+  description = "Flag to install the dashboard"
+  default     = true
+}
