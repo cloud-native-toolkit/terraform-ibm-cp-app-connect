@@ -253,7 +253,7 @@ resource null_resource create_instances {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/wait-for-crds.sh && oc apply -n ${self.triggers.namespace} -f ${local_file.instance_yaml.*.filename}"
+    command = "${path.module}/scripts/wait-for-crds.sh && oc apply -n ${self.triggers.namespace} -f ${local_file.instance_yaml[count.index].filename}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
