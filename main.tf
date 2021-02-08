@@ -86,9 +86,9 @@ locals {
       }
       spec = {
         license = local.license
+        useCommonServices = true
+        version = "11.0.0"
       }
-      useCommonServices = true
-      version = "11.0.0"
     }
   }
   designer = {
