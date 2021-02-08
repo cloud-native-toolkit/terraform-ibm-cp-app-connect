@@ -4,6 +4,7 @@ description: Module to install App Connect in the cluster
 tags:
     - tools
     - devops
+provider: k8s
 versions:
 - platforms:
     - ocp4
