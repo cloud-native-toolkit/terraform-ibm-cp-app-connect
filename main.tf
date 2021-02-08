@@ -262,7 +262,7 @@ resource null_resource create_instances {
 
   provisioner "local-exec" {
     when = destroy
-    command = "kubectl delete -n ${self.triggers.namespace} -f ${self.triggers.dir}"
+    command = "kubectl delete -n ${self.triggers.namespace} -f ${local_file.instance_yaml[count.index].filename}"
 
     environment = {
       KUBECONFIG = self.triggers.KUBECONFIG
