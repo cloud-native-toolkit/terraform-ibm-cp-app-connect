@@ -18,7 +18,7 @@ versions:
     - id: cp-catalog
       refs:
         - source: github.com/ibm-garage-cloud/terraform-ibm-cp-catalog
-          version: ">= 1.7.0"
+          version: ">= 1.0.0"
     - id: platform-navigator
       refs:
         - source: github.com/ibm-garage-cloud/terraform-ibm-cp-platform-navigator
