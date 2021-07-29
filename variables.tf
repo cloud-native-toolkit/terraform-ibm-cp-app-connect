@@ -44,3 +44,9 @@ variable "dashboard" {
   description = "Flag to install the dashboard"
   default     = true
 }
+
+variable "channel" {
+  type        = string
+  description = "The channel from which the App Connect instance will be deployed"
+  default     = "v1.5"
+}
