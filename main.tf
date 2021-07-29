@@ -27,7 +27,7 @@ locals {
         namespace = local.subscription_namespace
       }
       spec = {
-        channel = "v1.2"
+        channel = var.channel
         installPlanApproval = "Automatic"
         name = "ibm-appconnect"
         source = var.catalog_name
