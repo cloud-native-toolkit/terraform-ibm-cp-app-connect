@@ -13,7 +13,7 @@ locals {
 
   license = {
     accept = true
-    license = "L-APEH-BSVCHU"
+    license = var.license
     use = "CloudPakForIntegrationNonProduction"
   }
 

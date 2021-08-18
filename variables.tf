@@ -50,3 +50,9 @@ variable "channel" {
   description = "The channel from which the App Connect instance will be deployed"
   default     = "v1.5"
 }
+
+variable "license" {
+  type        = string
+  description = "The license key that should be applied"
+  default     = "L-KSBM-BZWEAT"
+}
